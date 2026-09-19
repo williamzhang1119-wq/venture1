@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#F6EFDD;
+    --sky-deep:#E9DCB8;
+    --ink:#2E2A22;
+    --ink-soft:#746B57;
+    --sun:#E3A857;
+    --sun-deep:#C98A2C;
+    --coral:#C1502E;
+    --leaf:#2F6F4E;
+    --blue:#1F6F54;
+    --paper:#FFFDF7;
+    --line:#D9C9A0;
+    --shadow: 0 6px 0 rgba(46,42,34,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Nunito', sans-serif;
+    background:
+      radial-gradient(circle at 15% 8%, #FFF6E0 0%, var(--sky) 45%, var(--sky-deep) 100%),
+      url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMjAiIGhlaWdodD0iMjIwIiB2aWV3Qm94PSIwIDAgMjIwIDIyMCI+CjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0M5Qjk4QSIgc3Ryb2tlLXdpZHRoPSIxLjQiIG9wYWNpdHk9IjAuNTUiPgo8cGF0aCBkPSJNMjAgNDAgUSA2MCAxMCwgMTAwIDQwIFQgMjAwIDQwIi8+CjxwYXRoIGQ9Ik0xMCA3MCBRIDU1IDQ1LCAxMDAgNzAgVCAyMTAgNzAiLz4KPHBhdGggZD0iTS0xMCAxMDAgUSA1MCAxMzAsIDExMCAxMDAgVCAyMzAgMTAwIi8+CjxwYXRoIGQ9Ik0wIDE0MCBRIDUwIDE2NSwgMTEwIDE0MCBUIDIyMCAxNDAiLz4KPHBhdGggZD0iTTIwIDE4MCBRIDY1IDE1NSwgMTEwIDE4MCBUIDIwMCAxODAiLz4KPC9nPgo8L3N2Zz4=");
+    background-size: cover, 220px 220px;
+    background-repeat: no-repeat, repeat;
+    color:var(--ink);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:20px;
+  }
+  .app{
+    width:100%;
+    max-width:560px;
+    display:flex;
+    flex-direction:column;
+    height:calc(100vh - 40px);
+    min-height:560px;
+  }
+
+  /* ---------- Header ---------- */
+  .header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 18px;
+    background:var(--paper);
+    border:3px solid var(--ink);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  .mascot{
+    width:54px;
+    height:54px;
+    flex-shrink:0;
+    filter:drop-shadow(0 3px 0 rgba(0,0,0,0.08));
+    transition:transform .35s ease;
+  }
+  .mascot.thinking #needle{
+    animation: spin 1.1s linear infinite;
+    transform-origin: 50px 50px;
+  }
+  @keyframes spin{
+    0%{ transform:rotate(0deg); }
+    100%{ transform:rotate(360deg); }
+  }
+  .header h1{
+    font-family:'Baloo 2', sans-serif;
+    font-size:22px;
+    margin:0;
+    line-height:1.1;
+    color:var(--ink);
+  }
+  .header p{
+    margin:2px 0 0;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    font-weight:700;
+  }
+
+  /* Curiosity meter - signature element: fills as the child keeps trying, not as they get things "right" */
+  .meter-wrap{
+    margin-left:auto;
+    text-align:center;
+    flex-shrink:0;
+  }
+  .meter-label{
+    font-size:10px;
+    font-weight:800;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin-bottom:4px;
+  }
+  .meter{
+    width:70px;
+    height:12px;
+    background:var(--sky-deep);
+    border:2px solid var(--ink);
+    border-radius:20px;
+    overflow:hidden;
+  }
+  .meter-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--sun), var(--coral));
+    transition:width .5s ease;
+    border-radius:20px 0 0 20px;
+  }
+
+  /* ---------- Chat area ---------- */
+  .chat{
+    flex:1;
+    overflow-y:auto;
+    padding:18px 6px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .row{
+    display:flex;
+    gap:10px;
+    align-items:flex-end;
+  }
+  .row.user{ flex-direction:row-reverse; }
+  .avatar{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    border:2.5px solid var(--ink);
+    background:var(--paper);
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
+  }
+  .bubble{
+    max-width:76%;
+    padding:12px 16px;
+    border:2.5px solid var(--ink);
+    border-radius:20px;
+    font-size:15px;
+    line-height:1.45;
+    font-weight:600;
+    box-shadow:var(--shadow);
+  }
+  .row.bot .bubble{
+    background:var(--paper);
+    border-bottom-left-radius:6px;
+  }
+  .row.user .bubble{
+    background:var(--sun);
+    border-bottom-right-radius:6px;
+    font-weight:700;
+  }
+  .bubble.typing{
+    display:flex;
+    gap:5px;
+    padding:14px 18px;
+  }
+  .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--ink-soft);
+    animation:blink 1.2s infinite ease-in-out;
+  }
+  .dot:nth-child(2){ animation-delay:.2s; }
+  .dot:nth-child(3){ animation-delay:.4s; }
+  @keyframes blink{ 0%,80%,100%{opacity:.25;} 40%{opacity:1;} }
+
+  .starter-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:4px 2px 10px;
+  }
+  .starter{
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-radius:16px;
+    padding:8px 13px;
+    font-family:'Nunito';
+    font-weight:700;
+    font-size:13px;
+    color:var(--blue);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .starter:hover{ background:var(--sky-deep); border-color:var(--blue); }
+
+  /* ---------- Input ---------- */
+  .inputbar{
+    display:flex;
+    gap:10px;
+    padding:12px;
+    background:var(--paper);
+    border:3px solid var(--ink);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+  }
+  .inputbar input{
+    flex:1;
+    border:none;
+    outline:none;
+    font-family:'Nunito';
+    font-size:15px;
+    font-weight:700;
+    color:var(--ink);
+    background:transparent;
+    padding:6px 8px;
+  }
+  .inputbar input::placeholder{ color:#9AA6C0; font-weight:600; }
+  .send-btn{
+    background:var(--blue);
+    border:2.5px solid var(--ink);
+    color:white;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    font-size:18px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 3px 0 var(--ink);
+    transition:transform .1s ease;
+    flex-shrink:0;
+  }
+  .send-btn:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--ink); }
+  .send-btn:disabled{ opacity:.5; cursor:default; }
+
+  .voice-toggle-btn{
+    margin-left:10px;
+    width:34px;
+    height:34px;
+    flex-shrink:0;
+    border-radius:50%;
+    border:2px solid var(--ink);
+    background:var(--paper);
+    font-size:15px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all .15s ease;
+  }
+  .voice-toggle-btn.active{
+    background:var(--leaf);
+    color:white;
+    box-shadow:0 2px 0 var(--ink);
+  }
+  .voice-toggle-btn[hidden], .mic-btn[hidden]{ display:none !important; }
+
+  .mic-btn{
+    background:var(--paper);
+    border:2.5px solid var(--ink);
+    color:var(--coral);
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    font-size:18px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 3px 0 var(--ink);
+    transition:transform .1s ease;
+    flex-shrink:0;
+  }
+  .mic-btn:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--ink); }
+  .mic-btn:disabled{ opacity:.5; cursor:default; }
+  .mic-btn.listening{
+    background:var(--coral);
+    color:white;
+    animation:mic-pulse 1s ease-in-out infinite;
+  }
+  @keyframes mic-pulse{
+    0%,100%{ box-shadow:0 3px 0 var(--ink), 0 0 0 0 rgba(193,80,46,0.45); }
+    50%{ box-shadow:0 3px 0 var(--ink), 0 0 0 8px rgba(193,80,46,0); }
+  }
+
+  .voice-status{
+    text-align:center;
+    font-size:11.5px;
+    font-weight:800;
+    color:var(--coral);
+    min-height:14px;
+    margin-top:4px;
+  }
+
+  .footnote{
+    text-align:center;
+    font-size:11px;
+    color:var(--ink-soft);
+    font-weight:700;
+    margin-top:8px;
+  }
+
+  .chat::-webkit-scrollbar{ width:6px; }
+  .chat::-webkit-scrollbar-thumb{ background:var(--line); border-radius:10px; }
+
+  /* ---------- Passport (topic badges) ---------- */
+  .passport{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 14px;
+    margin-top:10px;
+    background:var(--paper);
+    border:2.5px dashed var(--sun-deep);
+    border-radius:18px;
+    overflow-x:auto;
+  }
+  .passport-label{
+    font-family:'Baloo 2', sans-serif;
+    font-size:12px;
+    font-weight:700;
+    color:var(--ink-soft);
+    flex-shrink:0;
+    white-space:nowrap;
+  }
+  .badge{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    flex-shrink:0;
+    border:2px solid var(--line);
+    background:var(--sky);
+    filter:grayscale(1);
+    opacity:.45;
+    transition:all .35s ease;
+    position:relative;
+  }
+  .badge.earned{
+    filter:grayscale(0);
+    opacity:1;
+    background:var(--paper);
+    border-color:var(--sun-deep);
+    box-shadow:0 3px 0 var(--sun-deep);
+  }
+  .badge.pop{ animation:pop .5s ease; }
+  @keyframes pop{
+    0%{ transform:scale(1); }
+    40%{ transform:scale(1.35); }
+    100%{ transform:scale(1); }
+  }
+  .badge-toast{
+    align-self:center;
+    background:var(--paper);
+    border:2.5px dashed var(--sun-deep);
+    border-radius:16px;
+    padding:8px 16px;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    color:var(--ink);
+    text-align:center;
+    animation:pop .5s ease;
+  }
+
+  /* ---------- Quiz ---------- */
+  .quiz-btn{
+    margin:10px auto 0;
+    display:block;
+    background:var(--sun);
+    border:2.5px solid var(--ink);
+    border-radius:16px;
+    padding:9px 18px;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    color:var(--ink);
+    cursor:pointer;
+    box-shadow:0 3px 0 var(--ink);
+    transition:transform .1s ease;
+  }
+  .quiz-btn:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--ink); }
+  .quiz-btn:disabled{ opacity:.5; cursor:default; }
+
+  .quiz-card{
+    background:var(--paper);
+    border:2.5px solid var(--ink);
+    border-radius:20px;
+    padding:16px;
+    box-shadow:var(--shadow);
+    margin:4px 0;
+  }
+  .quiz-progress{
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .quiz-question{
+    font-family:'Baloo 2', sans-serif;
+    font-size:16px;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:12px;
+  }
+  .quiz-options{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .quiz-option{
+    text-align:left;
+    background:var(--sky);
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:10px 14px;
+    font-family:'Nunito';
+    font-weight:700;
+    font-size:14px;
+    color:var(--ink);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .quiz-option:hover:not(:disabled){ background:var(--sky-deep); border-color:var(--sun-deep); }
+  .quiz-option:disabled{ cursor:default; }
+  .quiz-option.correct{ background:#E3F1E8; border-color:var(--leaf); color:var(--leaf); }
+  .quiz-option.incorrect{ background:#FAE2DA; border-color:var(--coral); color:var(--coral); }
+  .quiz-explanation{
+    margin-top:12px;
+    background:var(--sky);
+    border-radius:12px;
+    padding:10px 14px;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+  }
+  .quiz-next{
+    margin-top:14px;
+    background:var(--sun);
+    border:2.5px solid var(--ink);
+    border-radius:14px;
+    padding:9px 16px;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    color:var(--ink);
+    cursor:pointer;
+    box-shadow:0 3px 0 var(--ink);
+  }
+  .quiz-next:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <svg class="mascot" id="mascot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="38" fill="#FFFDF7" stroke="#2E2A22" stroke-width="4"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#C98A2C" stroke-width="2" stroke-dasharray="2 5"/>
+      <text x="50" y="20" text-anchor="middle" font-family="Baloo 2, sans-serif" font-size="10" font-weight="700" fill="#2E2A22">N</text>
+      <text x="50" y="86" text-anchor="middle" font-family="Baloo 2, sans-serif" font-size="10" font-weight="700" fill="#2E2A22">S</text>
+      <text x="16" y="54" text-anchor="middle" font-family="Baloo 2, sans-serif" font-size="10" font-weight="700" fill="#2E2A22">W</text>
+      <text x="84" y="54" text-anchor="middle" font-family="Baloo 2, sans-serif" font-size="10" font-weight="700" fill="#2E2A22">E</text>
+      <g id="needle">
+        <path d="M50 26 L58 50 L50 74 L42 50 Z" fill="#C1502E" stroke="#2E2A22" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M50 26 L58 50 L50 50 Z" fill="#E3A857"/>
+      </g>
+      <circle cx="50" cy="50" r="5.5" fill="#2E2A22"/>
+    </svg>
+    <div>
+      <h1>Venture 1</h1>
+      <p>Every question is an adventure</p>
+    </div>
+    <div class="meter-wrap">
+      <div class="meter-label">Explorer</div>
+      <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+    </div>
+    <button class="voice-toggle-btn" id="voiceToggleBtn" aria-label="Toggle read-aloud" title="Read replies aloud">🔇</button>
+  </div>
+
+  <div class="passport" id="passport">
+    <span class="passport-label">🎒 Passport</span>
+  </div>
+
+  <button class="quiz-btn" id="quizBtn">🎯 Quiz Me!</button>
+
+  <div class="chat" id="chat"></div>
+
+  <div id="starters" class="starter-row"></div>
+
+  <div class="inputbar">
+    <input id="input" type="text" placeholder="What do you want to explore today?" maxlength="300"/>
+    <button class="mic-btn" id="micBtn" aria-label="Speak your question" title="Speak your question">🎤</button>
+    <button class="send-btn" id="sendBtn" aria-label="Send">➤</button>
+  </div>
+  <div class="voice-status" id="voiceStatus"></div>
+  <div class="footnote">Venture 1 asks questions to help you think — it won't just hand you the answer!</div>
+</div>
+
+<script>
+const SYSTEM_PROMPT = `You are Venture 1, a warm, patient AI helper for kids and teens (ages 5-18) using this chat right now.
+
+TOPIC RANGE: You can help with anything a curious kid might wonder about — math, science, nature, animals, space, history, geography, how things work, language and grammar, art, music, sports, coding basics, cooking/food science, everyday practical questions ("how do I tie my shoelaces," "why does bread rise"), and even big-picture "why" questions about life, feelings, or the world. If a topic is outside what's appropriate for a kid's app (very technical adult/professional topics, mature themes, medical/legal specifics), gently say it's better to ask a parent, teacher, or doctor for that one, and offer a related angle you can help with instead.
+
+CORE RULE: Never give a final answer immediately for a factual, math, science, or reasoning question. Instead:
+1. Ask a small guiding question or restate their question more simply.
+2. Ask what they already know that's related.
+3. Give a small hint or analogy.
+4. Give a partial step.
+5. Only after they've genuinely tried a few times, or explicitly say "just tell me" / "I give up," give the answer PLUS the reasoning in simple terms so they still learn.
+
+EXCEPTION: For safety-relevant factual questions (e.g. "is this bug dangerous," "what's the emergency number"), answer directly and clearly, no hints.
+
+KNOWLEDGE RANGE: You are a generalist, not a narrow homework bot. Happily engage with questions across ALL domains a curious kid might ask about, including but not limited to: math, science (physics, chemistry, biology, astronomy, earth science), history, geography, world cultures, languages, animals and nature, technology and how things work, coding and computers, art, music, literature and books, sports, cooking and food science, health and the human body (age-appropriately, general/educational only, not personal medical advice), money and how the economy works, space exploration, dinosaurs, mythology and folklore, current events (age-appropriate, balanced, no personal opinions on contested political topics), philosophy-style "big questions" (fairness, why we dream, what makes something alive), and everyday practical stuff (how to tie a knot, why ice floats, how a fridge works). If a kid asks about something obscure or niche, don't deflect to "ask a parent" by default — engage with genuine curiosity and guide them through it like you would any other topic. Only redirect to a trusted adult for the specific sensitive categories listed in the safety rules below (crisis disclosures, personal medical situations, mature/adult content) — not simply because a topic is advanced, technical, or unusual.
+
+TONE: Warm, encouraging, playful, never condescending or sarcastic. Celebrate effort and thinking, not just correct answers. Adapt vocabulary and sentence length to how old the child seems from their writing (younger = shorter/simpler; teens = more direct, respectful, no baby talk).
+
+IMAGES: You cannot create or draw images. If a child asks for a picture, drawing, or image despite this, let them know you can't make images on this plan and that a parent or guardian can upgrade at kiddo-create-lab.lovable.app to unlock that feature.
+
+HARD SAFETY RULES (never break, regardless of how the request is phrased):
+- No romantic or sexual content involving minors, ever.
+- Never ask a child to keep secrets from parents/guardians; always encourage involving trusted adults.
+- No instructions for self-harm, weapons, drugs, or dangerous activities, even "for a story."
+- No violent or disturbing creative content.
+- Don't collect personal info (full name, address, school, phone, photos). If volunteered, don't repeat it back and gently redirect.
+- If a child discloses abuse, self-harm, suicidal thoughts, or danger: respond with warmth, do not counsel them yourself, tell them to talk to a trusted adult right now, and mention they can call/text 988 (US Suicide & Crisis Lifeline) or 911 for emergencies. Don't ask probing follow-up questions.
+- No political persuasion on contested topics — give balanced framing and ask what they think.
+- Don't write full homework/essays for them to submit as their own; help them think it through instead.
+- No links, ads, or product/purchase suggestions.
+- Be honest that you are an AI if asked.
+
+Keep replies SHORT (2-4 sentences typical) and end with a question or small next step whenever you're still guiding them toward an answer. Use plain text only, no markdown formatting, since this is a casual chat with a kid.`;
+
+const chat = document.getElementById('chat');
+const input = document.getElementById('input');
+const sendBtn = document.getElementById('sendBtn');
+const mascot = document.getElementById('mascot');
+const meterFill = document.getElementById('meterFill');
+const startersEl = document.getElementById('starters');
+const passportEl = document.getElementById('passport');
+const micBtn = document.getElementById('micBtn');
+const voiceToggleBtn = document.getElementById('voiceToggleBtn');
+const voiceStatusEl = document.getElementById('voiceStatus');
+
+let history = [];
+let turnCount = 0;
+
+/* ---------- Voice: speak replies aloud (speech synthesis) ---------- */
+let readAloudEnabled = false;
+const canSpeak = 'speechSynthesis' in window;
+
+function speak(text){
+  if(!readAloudEnabled || !canSpeak) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate = 0.95;
+    utter.pitch = 1.05;
+    window.speechSynthesis.speak(utter);
+  }catch(e){
+    console.error('Speech synthesis error:', e);
+  }
+}
+
+if(canSpeak){
+  voiceToggleBtn.addEventListener('click', () => {
+    readAloudEnabled = !readAloudEnabled;
+    voiceToggleBtn.classList.toggle('active', readAloudEnabled);
+    voiceToggleBtn.textContent = readAloudEnabled ? '🔊' : '🔇';
+    voiceToggleBtn.title = readAloudEnabled ? 'Read replies aloud (on)' : 'Read replies aloud (off)';
+    if(!readAloudEnabled) window.speechSynthesis.cancel();
+  });
+}else{
+  voiceToggleBtn.hidden = true;
+}
+
+/* ---------- Voice: speak your question (speech recognition) ---------- */
+const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+let listening = false;
+
+if(SpeechRecognitionAPI){
+  recognition = new SpeechRecognitionAPI();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+  recognition.lang = 'en-US';
+
+  recognition.onstart = () => {
+    listening = true;
+    micBtn.classList.add('listening');
+    voiceStatusEl.textContent = "Listening... 🎧";
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    input.value = transcript;
+    voiceStatusEl.textContent = '';
+    sendMessage();
+  };
+
+  recognition.onerror = (event) => {
+    voiceStatusEl.textContent = event.error === 'not-allowed'
+      ? "Microphone access is blocked — check your browser settings."
+      : "Didn't catch that — try again!";
+  };
+
+  recognition.onend = () => {
+    listening = false;
+    micBtn.classList.remove('listening');
+    setTimeout(() => { if(!listening) voiceStatusEl.textContent = ''; }, 2500);
+  };
+
+  micBtn.addEventListener('click', () => {
+    if(listening){
+      recognition.stop();
+      return;
+    }
+    try{
+      recognition.start();
+    }catch(e){
+      console.error('Speech recognition start error:', e);
+    }
+  });
+}else{
+  micBtn.hidden = true;
+}
+
+/* ---------- Passport / topic badges ---------- */
+const CATEGORIES = [
+  { id:'science',  emoji:'🔬', label:'Science Explorer',  keywords:['science','atom','chemistry','physics','biology','experiment','gravity','molecule','element'] },
+  { id:'nature',   emoji:'🌿', label:'Nature Explorer',   keywords:['animal','plant','ocean','ecosystem','forest','dinosaur','insect','species','habitat'] },
+  { id:'space',    emoji:'🚀', label:'Space Explorer',    keywords:['space','planet','star','galaxy','moon','astronaut','universe','solar','rocket'] },
+  { id:'history',  emoji:'📜', label:'History Explorer',  keywords:['history','ancient','war','king','queen','civilization','egypt','castle','empire'] },
+  { id:'math',     emoji:'🔢', label:'Math Explorer',     keywords:['math','number','multiply','divide','equation','fraction','geometry','plus','minus'] },
+  { id:'arts',     emoji:'🎨', label:'Arts Explorer',     keywords:['art','music','paint','draw','song','instrument','color','dance','sculpture'] },
+  { id:'tech',     emoji:'💻', label:'Tech Explorer',     keywords:['computer','internet','code','coding','robot','technology','app','wifi','software'] },
+  { id:'big',      emoji:'🤔', label:'Big-Question Explorer', keywords:['why do we','feelings','fair','exist','dream','happy','sad','meaning','alive'] }
+];
+
+let earnedBadges = new Set();
+const STORAGE_KEY = 'venture1-badges';
+
+function renderPassport(){
+  passportEl.querySelectorAll('.badge').forEach(b => b.remove());
+  CATEGORIES.forEach(cat => {
+    const b = document.createElement('div');
+    b.className = 'badge' + (earnedBadges.has(cat.id) ? ' earned' : '');
+    b.textContent = cat.emoji;
+    b.title = earnedBadges.has(cat.id) ? cat.label + ' — earned!' : cat.label + ' — not yet discovered';
+    b.dataset.id = cat.id;
+    passportEl.appendChild(b);
+  });
+}
+renderPassport();
+
+async function loadBadges(){
+  try{
+    const result = await window.storage.get(STORAGE_KEY, false);
+    if(result && result.value){
+      const arr = JSON.parse(result.value);
+      earnedBadges = new Set(arr);
+      renderPassport();
+    }
+  }catch(e){
+    // no saved badges yet, that's fine
+  }
+}
+loadBadges();
+
+async function saveBadges(){
+  try{
+    await window.storage.set(STORAGE_KEY, JSON.stringify(Array.from(earnedBadges)), false);
+  }catch(e){
+    console.error('Could not save passport progress:', e);
+  }
+}
+
+function checkForNewBadges(text){
+  const lower = text.toLowerCase();
+  const newlyEarned = [];
+  CATEGORIES.forEach(cat => {
+    if(earnedBadges.has(cat.id)) return;
+    const hit = cat.keywords.some(k => lower.includes(k));
+    if(hit){
+      earnedBadges.add(cat.id);
+      newlyEarned.push(cat);
+    }
+  });
+  if(newlyEarned.length){
+    renderPassport();
+    saveBadges();
+    newlyEarned.forEach(cat => {
+      const toast = document.createElement('div');
+      toast.className = 'badge-toast';
+      toast.textContent = `🎉 New stamp earned: ${cat.emoji} ${cat.label}!`;
+      chat.appendChild(toast);
+      chat.scrollTop = chat.scrollHeight;
+      const badgeEl = passportEl.querySelector(`[data-id="${cat.id}"]`);
+      if(badgeEl){
+        badgeEl.classList.add('pop');
+        setTimeout(() => badgeEl.classList.remove('pop'), 500);
+      }
+    });
+  }
+}
+
+const STARTERS = [
+  "Why is the sky blue?",
+  "What's 12 x 8?",
+  "How do computers think?",
+  "Why did dinosaurs go extinct?",
+  "How does money work?",
+  "Why do we dream?"
+];
+
+function renderStarters(){
+  startersEl.innerHTML = '';
+  STARTERS.forEach(s => {
+    const b = document.createElement('button');
+    b.className = 'starter';
+    b.textContent = s;
+    b.onclick = () => { input.value = s; sendMessage(); };
+    startersEl.appendChild(b);
+  });
+}
+renderStarters();
+
+function addBubble(role, text){
+  const row = document.createElement('div');
+  row.className = 'row ' + (role === 'user' ? 'user' : 'bot');
+
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = role === 'user' ? '🙂' : '🧭';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.textContent = text;
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+  if(role !== 'user') speak(text);
+  return bubble;
+}
+
+function addUpgradeBubble(){
+  const row = document.createElement('div');
+  row.className = 'row bot';
+
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = '🧭';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.innerHTML = `I can't draw pictures on this plan yet! Ask a parent or guardian to upgrade your membership at <a href="https://kiddo-create-lab.lovable.app/" target="_blank" rel="noopener noreferrer" style="color:var(--blue); font-weight:800; text-decoration:underline;">kiddo-create-lab.lovable.app</a> to unlock image creation.`;
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function isImageRequest(text){
+  const lower = text.toLowerCase();
+  const patterns = [
+    /\bdraw\b/, /\bpaint\b/, /illustrat/, /\bsketch\b/,
+    /(make|generate|create|show)\s+(me\s+)?(an?\s+)?(image|picture|photo|drawing|illustration)/,
+    /(image|picture|photo|drawing)\s+of\b/
+  ];
+  return patterns.some(p => p.test(lower));
+}
+
+const quizBtn = document.getElementById('quizBtn');
+
+async function startQuiz(){
+  quizBtn.disabled = true;
+  sendBtn.disabled = true;
+  if(micBtn) micBtn.disabled = true;
+  mascot.classList.add('thinking');
+  addTypingBubble();
+
+  const topicHints = Array.from(earnedBadges).map(id => {
+    const cat = CATEGORIES.find(c => c.id === id);
+    return cat ? cat.label.replace(' Explorer', '') : null;
+  }).filter(Boolean);
+
+  const quizSystemPrompt = `You generate quiz questions for a kids' educational app called Venture 1. Create exactly 4 fun, age-appropriate multiple-choice questions for kids aged 6-14, medium difficulty, spanning a mix of science, nature, space, history, math, arts, and technology.${topicHints.length ? ` The child has shown interest in: ${topicHints.join(', ')}. Naturally include at least 2 questions touching those topics.` : ''}
+Respond with ONLY raw valid JSON, no markdown formatting, no code fences, no extra commentary — exactly this shape:
+[{"question":"...","options":["...","...","...","..."],"correctIndex":0,"explanation":"..."}]`;
+
+  try{
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1200,
+        system: quizSystemPrompt,
+        messages: [{ role: "user", content: "Generate the quiz now." }]
+      })
+    });
+
+    if(!response.ok){
+      const errText = await response.text();
+      throw new Error(`API returned ${response.status}: ${errText}`);
+    }
+
+    const data = await response.json();
+    removeTypingBubble();
+
+    let raw = '';
+    if(data && Array.isArray(data.content)){
+      raw = data.content.map(b => b.text || '').filter(Boolean).join('\n').trim();
+    }
+    raw = raw.replace(/```json|```/g, '').trim();
+    const questions = JSON.parse(raw);
+    renderQuiz(questions);
+  }catch(err){
+    removeTypingBubble();
+    addBubble('bot', "Hmm, I couldn't put a quiz together just now — want to try the button again?");
+    console.error('Venture 1 quiz error:', err);
+  }finally{
+    mascot.classList.remove('thinking');
+    quizBtn.disabled = false;
+    sendBtn.disabled = false;
+    if(micBtn) micBtn.disabled = false;
+  }
+}
+
+function renderQuiz(questions){
+  let current = 0;
+  let score = 0;
+
+  const card = document.createElement('div');
+  card.className = 'quiz-card';
+  chat.appendChild(card);
+  chat.scrollTop = chat.scrollHeight;
+
+  function showQuestion(){
+    const q = questions[current];
+    card.innerHTML = '';
+
+    const progress = document.createElement('div');
+    progress.className = 'quiz-progress';
+    progress.textContent = `Question ${current + 1} of ${questions.length}`;
+    card.appendChild(progress);
+
+    const qEl = document.createElement('div');
+    qEl.className = 'quiz-question';
+    qEl.textContent = q.question;
+    card.appendChild(qEl);
+
+    const optsWrap = document.createElement('div');
+    optsWrap.className = 'quiz-options';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-option';
+      btn.textContent = opt;
+      btn.onclick = () => selectAnswer(i);
+      optsWrap.appendChild(btn);
+    });
+    card.appendChild(optsWrap);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function selectAnswer(i){
+    const q = questions[current];
+    const buttons = card.querySelectorAll('.quiz-option');
+    buttons.forEach(b => b.disabled = true);
+    if(i === q.correctIndex){
+      buttons[i].classList.add('correct');
+      score++;
+    }else{
+      buttons[i].classList.add('incorrect');
+      buttons[q.correctIndex].classList.add('correct');
+    }
+
+    const explanation = document.createElement('div');
+    explanation.className = 'quiz-explanation';
+    explanation.textContent = (i === q.correctIndex ? "✅ Yes! " : "Not quite — ") + q.explanation;
+    card.appendChild(explanation);
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'quiz-next';
+    nextBtn.textContent = current === questions.length - 1 ? "See my score" : "Next question →";
+    nextBtn.onclick = () => {
+      current++;
+      if(current < questions.length){
+        showQuestion();
+      }else{
+        showResults();
+      }
+    };
+    card.appendChild(nextBtn);
+    bumpMeter();
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function showResults(){
+    card.innerHTML = '';
+    const title = document.createElement('div');
+    title.className = 'quiz-question';
+    title.textContent = `🏁 You scored ${score} out of ${questions.length}!`;
+    card.appendChild(title);
+
+    const msg = document.createElement('div');
+    msg.className = 'quiz-explanation';
+    msg.textContent = score === questions.length
+      ? "Amazing work, true explorer! You got every question right."
+      : "Nice thinking! Every question you try makes you a sharper explorer.";
+    card.appendChild(msg);
+
+    const again = document.createElement('button');
+    again.className = 'quiz-next';
+    again.textContent = "🎯 Take another quiz";
+    again.onclick = () => { card.remove(); startQuiz(); };
+    card.appendChild(again);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  showQuestion();
+}
+
+quizBtn.addEventListener('click', startQuiz);
+
+function addTypingBubble(){
+  const row = document.createElement('div');
+  row.className = 'row bot';
+  row.id = 'typingRow';
+
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = '🧭';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble typing';
+  bubble.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function removeTypingBubble(){
+  const row = document.getElementById('typingRow');
+  if(row) row.remove();
+}
+
+function bumpMeter(){
+  turnCount = Math.min(turnCount + 1, 6);
+  const pct = (turnCount / 6) * 100;
+  meterFill.style.width = pct + '%';
+  if(turnCount >= 6){
+    setTimeout(() => {
+      turnCount = 0;
+      meterFill.style.width = '0%';
+    }, 900);
+  }
+}
+
+async function sendMessage(){
+  const text = input.value.trim();
+  if(!text) return;
+
+  if(startersEl.childElementCount) startersEl.innerHTML = '';
+
+  addBubble('user', text);
+  history.push({ role: 'user', content: text });
+  input.value = '';
+
+  if(isImageRequest(text)){
+    addUpgradeBubble();
+    history.push({ role: 'assistant', content: "I can't create images on the free plan yet — upgrading unlocks image creation!" });
+    input.focus();
+    return;
+  }
+
+  sendBtn.disabled = true;
+  if(micBtn) micBtn.disabled = true;
+  mascot.classList.add('thinking');
+  addTypingBubble();
+
+  try{
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1200,
+        system: SYSTEM_PROMPT,
+        messages: history
+      })
+    });
+
+    if(!response.ok){
+      const errText = await response.text();
+      throw new Error(`API returned ${response.status}: ${errText}`);
+    }
+
+    const data = await response.json();
+    removeTypingBubble();
+
+    let reply = "Hmm, my brain got a little fuzzy there — can you ask me that again?";
+    if(data && Array.isArray(data.content)){
+      reply = data.content.map(b => b.text || '').filter(Boolean).join('\n').trim() || reply;
+    }
+
+    addBubble('bot', reply);
+    history.push({ role: 'assistant', content: reply });
+    bumpMeter();
+    checkForNewBadges(text + ' ' + reply);
+  }catch(err){
+    removeTypingBubble();
+    addBubble('bot', "Oops, I got tangled up in my own thoughts! Can you try asking me again?");
+    console.error("Venture 1 error:", err);
+  }finally{
+    mascot.classList.remove('thinking');
+    sendBtn.disabled = false;
+    if(micBtn) micBtn.disabled = false;
+    input.focus();
+  }
+}
+
+sendBtn.addEventListener('click', sendMessage);
+input.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') sendMessage();
+});
+
+// Greeting
+addBubble('bot', "Hi there! I'm Venture 1 🧭 Tell me what you're curious about, and let's explore it together!");
+</script>
+
+</body>
+</html>
