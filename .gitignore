@@ -1,0 +1,11 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.env.stripe.generated
+venture1-deploy/data/
+.DS_Store
+*.log
+/tmp/
+.agents/
+skills-lock.json

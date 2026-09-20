@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture1 Family — Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#F6EFDD; --sky-deep:#E9DCB8; --ink:#2E2A22; --ink-soft:#746B57;
+    --sun:#E3A857; --coral:#C1502E; --leaf:#2F6F4E; --blue:#1F6F54;
+    --paper:#FFFDF7; --line:#D9C9A0;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:'Nunito',sans-serif; color:var(--ink);
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 18% 10%, #FFF6E0 0%, var(--sky) 48%, var(--sky-deep) 100%),
+      url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMjAiIGhlaWdodD0iMjIwIiB2aWV3Qm94PSIwIDAgMjIwIDIyMCI+CjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0M5Qjk4QSIgc3Ryb2tlLXdpZHRoPSIxLjQiIG9wYWNpdHk9IjAuNTUiPgo8cGF0aCBkPSJNMjAgNDAgUSA2MCAxMCwgMTAwIDQwIFQgMjAwIDQwIi8+CjxwYXRoIGQ9Ik0xMCA3MCBRIDU1IDQ1LCAxMDAgNzAgVCAyMTAgNzAiLz4KPHBhdGggZD0iTS0xMCAxMDAgUSA1MCAxMzAsIDExMCAxMDAgVCAyMzAgMTAwIi8+CjwvZz4KPC9zdmc+");
+    background-size:cover,220px 220px; background-repeat:no-repeat,repeat;
+    padding:28px 18px 48px;
+  }
+  .wrap{max-width:720px;margin:0 auto}
+  header{text-align:center;margin-bottom:28px}
+  .brand{
+    font-family:'Baloo 2',sans-serif; font-size:clamp(2rem,6vw,3rem);
+    margin:0; letter-spacing:-.02em;
+  }
+  .tag{margin:8px 0 0; color:var(--ink-soft); font-weight:700; font-size:1.05rem}
+  .plans{display:grid; gap:16px; grid-template-columns:1fr 1fr}
+  @media (max-width:640px){.plans{grid-template-columns:1fr}}
+  .plan{
+    background:var(--paper); border:3px solid var(--ink); border-radius:22px;
+    padding:22px; box-shadow:0 6px 0 rgba(46,42,34,.10);
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .plan.featured{border-color:var(--blue); position:relative}
+  .plan h2{font-family:'Baloo 2',sans-serif; margin:0; font-size:1.45rem}
+  .price{font-family:'Baloo 2',sans-serif; font-size:2rem; margin:0}
+  .price span{font-size:1rem; color:var(--ink-soft); font-family:'Nunito',sans-serif; font-weight:800}
+  .plan ul{margin:0; padding-left:1.1rem; color:var(--ink-soft); font-weight:700; line-height:1.5}
+  .cta{
+    margin-top:auto; background:var(--blue); color:#fff; border:2.5px solid var(--ink);
+    border-radius:16px; padding:12px 16px; font-family:'Baloo 2',sans-serif; font-size:1.05rem;
+    cursor:pointer; box-shadow:0 3px 0 var(--ink);
+  }
+  .cta:disabled{opacity:.5; cursor:default}
+  .cta.secondary{background:var(--sun); color:var(--ink)}
+  .email-row{margin:18px 0 8px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+  .email-row input{
+    flex:1; min-width:220px; max-width:360px; border:2.5px solid var(--ink); border-radius:14px;
+    padding:12px 14px; font:700 15px 'Nunito',sans-serif; background:var(--paper);
+  }
+  .note{text-align:center; color:var(--ink-soft); font-weight:700; font-size:.9rem; margin-top:18px}
+  .status{
+    text-align:center; margin:12px auto 0; max-width:480px; padding:10px 14px;
+    border-radius:14px; border:2px dashed var(--line); background:rgba(255,253,247,.7);
+    font-weight:800; font-size:.9rem; min-height:1.2em;
+  }
+  .links{text-align:center; margin-top:20px}
+  .links a{color:var(--blue); font-weight:800}
+  .err{color:var(--coral)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1 class="brand">Venture1</h1>
+      <p class="tag">Safe, affordable AI adventures for kids — Family plan unlocks image creation.</p>
+    </header>
+
+    <div class="email-row">
+      <input id="email" type="email" placeholder="Parent email (for receipts &amp; invoices)" autocomplete="email"/>
+      <button class="cta secondary" id="portalBtn" type="button">Manage billing</button>
+    </div>
+    <div class="status" id="status" aria-live="polite"></div>
+
+    <div class="plans">
+      <div class="plan">
+        <h2>Family Monthly</h2>
+        <p class="price">$9.99 <span>/ month</span></p>
+        <ul>
+          <li>Guided Socratic learning chat</li>
+          <li>Image creation unlock</li>
+          <li>Cancel anytime in the portal</li>
+          <li>Tax calculated at checkout</li>
+        </ul>
+        <button class="cta" data-interval="month" type="button">Start monthly</button>
+      </div>
+      <div class="plan featured">
+        <h2>Family Yearly</h2>
+        <p class="price">$79 <span>/ year</span></p>
+        <ul>
+          <li>Everything in monthly</li>
+          <li>~2 months free vs monthly</li>
+          <li>Automatic invoices via Stripe</li>
+          <li>Parent-friendly billing portal</li>
+        </ul>
+        <button class="cta" data-interval="year" type="button">Start yearly</button>
+      </div>
+    </div>
+
+    <p class="note">Prices shown before tax. Stripe Tax adds sales tax / VAT where you have an active registration.</p>
+    <div class="links"><a href="/">← Back to Venture1 chat</a></div>
+  </div>
+
+<script>
+const statusEl = document.getElementById('status');
+const emailEl = document.getElementById('email');
+
+function setStatus(msg, isErr){
+  statusEl.textContent = msg || '';
+  statusEl.classList.toggle('err', Boolean(isErr));
+}
+
+async function refreshStatus(){
+  const email = emailEl.value.trim();
+  if(!email){ setStatus(''); return; }
+  try{
+    const res = await fetch('/api/billing/status?email=' + encodeURIComponent(email));
+    const data = await res.json();
+    if(data.status && data.status !== 'none'){
+      setStatus(`Subscription: ${data.status}${data.imageCreation ? ' · image creation unlocked' : ''}`);
+    }else{
+      setStatus('No active Family subscription for this email yet.');
+    }
+  }catch(e){
+    setStatus('Could not check billing status.', true);
+  }
+}
+
+emailEl.addEventListener('change', refreshStatus);
+emailEl.addEventListener('blur', refreshStatus);
+
+document.querySelectorAll('[data-interval]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const interval = btn.dataset.interval;
+    const email = emailEl.value.trim();
+    btn.disabled = true;
+    setStatus('Opening secure Stripe Checkout…');
+    try{
+      const res = await fetch('/api/checkout/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ interval, email: email || undefined })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.message || data.error || 'Checkout failed');
+      window.location.href = data.url;
+    }catch(err){
+      setStatus(err.message, true);
+      btn.disabled = false;
+    }
+  });
+});
+
+document.getElementById('portalBtn').addEventListener('click', async () => {
+  const email = emailEl.value.trim();
+  if(!email){ setStatus('Enter the parent email used at checkout.', true); return; }
+  setStatus('Opening Customer Portal…');
+  try{
+    const res = await fetch('/api/billing/portal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.message || data.error || 'Portal failed');
+    window.location.href = data.url;
+  }catch(err){
+    setStatus(err.message, true);
+  }
+});
+</script>
+</body>
+</html>

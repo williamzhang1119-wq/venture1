@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Venture1 Family</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --sky:#F6EFDD; --sky-deep:#E9DCB8; --ink:#2E2A22; --ink-soft:#746B57; --blue:#1F6F54; --paper:#FFFDF7; --sun:#E3A857; }
+  body{
+    margin:0; min-height:100vh; display:grid; place-items:center; font-family:'Nunito',sans-serif; color:var(--ink);
+    background: radial-gradient(circle at 20% 15%, #FFF6E0, var(--sky) 50%, var(--sky-deep));
+    padding:24px;
+  }
+  .card{
+    max-width:480px; width:100%; background:var(--paper); border:3px solid var(--ink);
+    border-radius:22px; padding:28px; box-shadow:0 6px 0 rgba(46,42,34,.1); text-align:center;
+  }
+  h1{font-family:'Baloo 2',sans-serif; margin:0 0 8px; font-size:2rem}
+  p{color:var(--ink-soft); font-weight:700; line-height:1.45}
+  .meta{margin-top:14px; font-size:.9rem; color:var(--ink-soft); font-weight:800}
+  a.btn{
+    display:inline-block; margin-top:18px; background:var(--blue); color:#fff; text-decoration:none;
+    border:2.5px solid var(--ink); border-radius:16px; padding:12px 18px; font-family:'Baloo 2',sans-serif;
+    box-shadow:0 3px 0 var(--ink);
+  }
+  a.secondary{background:var(--sun); color:var(--ink); margin-left:8px}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>You're in 🧭</h1>
+    <p id="msg">Confirming your Venture1 Family subscription…</p>
+    <div class="meta" id="meta"></div>
+    <div>
+      <a class="btn" href="/">Start exploring</a>
+      <a class="btn secondary" href="/pricing.html">Billing</a>
+    </div>
+  </div>
+<script>
+(async () => {
+  const params = new URLSearchParams(location.search);
+  const sessionId = params.get('session_id');
+  const msg = document.getElementById('msg');
+  const meta = document.getElementById('meta');
+  if(!sessionId){
+    msg.textContent = 'Thanks for joining Venture1 Family!';
+    return;
+  }
+  try{
+    const res = await fetch('/api/checkout/session/' + encodeURIComponent(sessionId));
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.message || 'Could not load session');
+    msg.textContent = 'Welcome' + (data.customer_email ? `, ${data.customer_email}` : '') + '! Image creation is unlocked for your Family plan.';
+    const tax = data.tax != null ? ` · tax ${(data.tax/100).toFixed(2)} ${String(data.currency||'').toUpperCase()}` : '';
+    const total = data.amount_total != null ? `Paid ${(data.amount_total/100).toFixed(2)} ${String(data.currency||'').toUpperCase()}${tax}` : '';
+    meta.textContent = [total, data.automatic_tax?.status ? `Tax: ${data.automatic_tax.status}` : ''].filter(Boolean).join(' · ');
+  }catch(e){
+    msg.textContent = 'Payment received — entitlement will sync via webhook shortly.';
+    meta.textContent = e.message;
+  }
+})();
+</script>
+</body>
+</html>
