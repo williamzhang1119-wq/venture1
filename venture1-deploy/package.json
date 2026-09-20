@@ -5,12 +5,16 @@
   "description": "Venture 1 - a kids' educational AI chatbot using Socratic guided learning",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "stripe:setup": "node scripts/setup-stripe-catalog.js",
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook"
   },
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "dotenv": "^17.2.2",
+    "express": "^4.19.2",
+    "stripe": "^22.6.0"
   }
 }
